@@ -1,0 +1,7 @@
+To Build you must have NSIS installed 
+
+Additional Plug-Ins to install in the plugin directory:
+NSIS7z - http://nsis.sourceforge.net/Nsis7z_plug-in
+
+The plugin install process is easy... Just copy the dll from the zip file into your plug-ins 
+directory in your NSIS installation.
