@@ -18,7 +18,7 @@
 
 !define DevKitURL "http://cloud.github.com/downloads/oneclick/rubyinstaller/DevKit-tdm-32-4.5.1-20101214-1400-sfx.exe"
 !define DevKitDownload "$Temp\DevKit.exe";
-!define RubyURL "http://rubyforge.org/frs/download.php/74293/rubyinstaller-1.8.7-p334.exe";
+!define RubyURL "http://rubyforge.org/frs/download.php/74298/rubyinstaller-1.9.2-p180.exe";
 !define RubyDownload "$Temp\Ruby.exe"
 
 
@@ -40,7 +40,7 @@ Var /GLOBAL DevKitDir
 
 
 
-ReadRegStr $RubyDir HKLM "SOFTWARE\RubyInstaller\MRI\1.8.7" "InstallLocation"
+ReadRegStr $RubyDir HKLM "SOFTWARE\RubyInstaller\MRI\1.9.2" "InstallLocation"
 DetailPrint $RubyDir
 IfErrors 0 RubyFound
 	DetailPrint "No existing Ruby installation found"
@@ -85,5 +85,6 @@ nsExec::ExecToLog "$gemBin install win32-open3 ruby-wmi windows-api windows-pr -
 
 DetailPrint "Installing Chef..."
 nsExec::ExecToLog "$gemBin install chef --no-ri --no-rdoc --verbose";
+nsExec::ExecToLog "$gemBin install knife-windows --no-ri --no-rdoc --verbose";
 
 sectionEnd
