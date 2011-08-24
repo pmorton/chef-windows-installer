@@ -16,15 +16,15 @@
 # limitations under the License.
 #
 
-!define DevKitURL "http://cloud.github.com/downloads/oneclick/rubyinstaller/DevKit-tdm-32-4.5.1-20101214-1400-sfx.exe"
+!define DevKitURL "http://cloud.github.com/downloads/oneclick/rubyinstaller/DevKit-tdm-32-4.5.2-20110712-1620-sfx.exe"
 !define DevKitDownload "$Temp\DevKit.exe";
-!define RubyURL "http://rubyforge.org/frs/download.php/74298/rubyinstaller-1.9.2-p180.exe";
+!define RubyURL "http://rubyforge.org/frs/download.php/75127/rubyinstaller-1.9.2-p290.exe";
 !define RubyDownload "$Temp\Ruby.exe"
 
 
 OutFile "ChefInstaller.exe"
 
-InstallDir "C:\ChefClient"
+InstallDir "C:\Chef"
 
 XPStyle On
 ShowInstDetails show
@@ -44,7 +44,7 @@ ReadRegStr $RubyDir HKLM "SOFTWARE\RubyInstaller\MRI\1.9.2" "InstallLocation"
 DetailPrint $RubyDir
 IfErrors 0 RubyFound
 	DetailPrint "No existing Ruby installation found"
-	StrCpy $RubyDir "$INSTDIR\Ruby"
+	StrCpy $RubyDir "C:\ruby"
 	StrCpy $InstallRuby 1
 	Goto RubyInitalized
 RubyFound:
@@ -60,7 +60,7 @@ IntCmp $InstallRuby 0 RubyInstallDone
 	nsisdl::download "${RubyURL}" "${RubyDownload}"
 
 	DetailPrint "Installing Ruby (${RubyDownload})"
-	nsExec::ExecToLog "${RubyDownload} /tasks=assocfiles,modpath /verysilent /dir=$INSTDIR\Ruby"
+	nsExec::ExecToLog "${RubyDownload} /tasks=assocfiles,modpath /verysilent /dir=$RubyDir"
 RubyInstallDone:
 
 StrCpy $DevKitDir "$RubyDir\DevKit"
@@ -81,7 +81,7 @@ DevKitDone:
 DetailPrint "Configuring Ruby DevKit...."
 nsExec::ExecToLog "$RubyBin $DevKitDir\dk.rb init"
 nsExec::ExecToLog "$RubyBin $DevKitDir\dk.rb install"
-nsExec::ExecToLog "$gemBin install win32-open3 ruby-wmi windows-api windows-pr --no-rdoc --no-ri --verbose"
+nsExec::ExecToLog "$gemBin install win32-open3-19 rdp-ruby-wmi windows-api windows-pr --no-rdoc --no-ri --verbose"
 
 DetailPrint "Installing Chef..."
 nsExec::ExecToLog "$gemBin install chef --no-ri --no-rdoc --verbose";
